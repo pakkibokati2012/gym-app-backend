@@ -41,6 +41,15 @@ app.use(
 
         return user;
       },
+      login: async args => {
+        console.log(args);
+        const user = await User.findByCredentials(
+          args.loginInput.email,
+          args.loginInput.password
+        );
+        const token = await user.generateAuthToken();
+        return user;
+      },
       recordMeasurement: async args => {
         console.log(args);
         const measurement = new Measurement({

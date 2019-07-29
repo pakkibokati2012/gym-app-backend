@@ -46,6 +46,11 @@ var schema = buildSchema(`
       ward: Int!
     }
 
+    input LoginInput {
+      email: String!
+      password: String!
+    }
+
     input TemporaryAddress {
       zone: String!
       district: String!
@@ -80,6 +85,7 @@ var schema = buildSchema(`
     type RootQuery {
         users: [User!]!
         user(id: String!): User!
+        login(loginInput: LoginInput!): User!
     }
 
     type RootMutation {
