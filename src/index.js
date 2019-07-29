@@ -34,7 +34,7 @@ app.use(
           if (!user) {
             throw new Error();
           }
-
+          await user.populate('measurements').execPopulate();
           return user;
         } catch (error) {
           throw new Error('Please authenticate!');
