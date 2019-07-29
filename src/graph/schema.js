@@ -9,6 +9,22 @@ var schema = buildSchema(`
         tokens: [Token!]!
         permanentAddress: Address
         temporaryAddress: Address
+        measurements: [Measurement!]!
+    }
+
+    type Measurement {
+      weight: Float!
+      chest: Float!
+      bicep: Float!
+      shoulder: Float!
+      forearm: Float!
+      upperAbs: Float!
+      lowerAbs: Float!
+      hip: Float!
+      thigh: Float!
+      calf: Float!
+      height: Float!
+
     }
 
     type Address {
@@ -46,6 +62,21 @@ var schema = buildSchema(`
         temporaryAddress: TemporaryAddress
     }
 
+    input MeasurementInput {
+      weight: Float!
+      chest: Float!
+      bicep: Float!
+      shoulder: Float!
+      forearm: Float!
+      upperAbs: Float!
+      lowerAbs: Float!
+      hip: Float!
+      thigh: Float!
+      calf: Float!
+      height: Float!
+      owner: String!
+  }
+
     type RootQuery {
         users: [User!]!
         user(id: String!): User!
@@ -53,6 +84,7 @@ var schema = buildSchema(`
 
     type RootMutation {
         createUser(userInput: UserInput): User
+        recordMeasurement(measurementInput: MeasurementInput): Measurement
     }
 
     schema {
