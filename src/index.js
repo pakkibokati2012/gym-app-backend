@@ -1,6 +1,8 @@
 var express = require('express');
 require('./db/mongoose.js');
 var graphqlHTTP = require('express-graphql');
+const jwt = require('jsonwebtoken');
+
 var bodyParser = require('body-parser');
 const User = require('./models/user');
 const Measurement = require('./models/measurement');
@@ -20,10 +22,23 @@ app.use(
       },
       user: async args => {
         console.log(args);
-        const user = await User.findById(args.id);
-        await user.populate('measurements').execPopulate();
-        console.log(user);
-        return user;
+
+        try {
+          const token = args.token;
+          const decoded = jwt.verify(token, 'futbookee');
+          const user = await User.findOne({
+            _id: decoded._id,
+            'tokens.token': token
+          });
+
+          if (!user) {
+            throw new Error();
+          }
+
+          return user;
+        } catch (error) {
+          throw new Error('Please authenticate!');
+        }
       },
       createUser: async args => {
         console.log(args);

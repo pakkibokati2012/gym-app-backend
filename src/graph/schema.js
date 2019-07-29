@@ -84,7 +84,7 @@ var schema = buildSchema(`
 
     type RootQuery {
         users: [User!]!
-        user(id: String!): User!
+        user(id: String!, token: String!): User!
         login(loginInput: LoginInput!): User!
     }
 
